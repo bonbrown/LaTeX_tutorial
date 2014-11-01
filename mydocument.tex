@@ -1,0 +1,135 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{psfrag}
+\usepackage{framed}
+
+\title{A Not-So-Short LaTeX Tutorial}
+\author{Bonnie Brown}
+\date{November 2014}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+LaTeX (``lay-teck") is a type-setting system. It is a powerful and flexible way to create beautiful documents from simple letters or notes, to entire books or dissertations with multiple parts, figures and tables, and bibliographies. LaTeX allows you to focus on what you're writing, not how you write it (like you would in a traditional word processor). You specify the formatting through commands which are passed arguments rather than formatting the text itself. This is very useful for a peer-review manuscript or a thesis which have very strict formatting requirements made by the journal or university, respectively. In fact, journals often provide a LaTeX template that already has the appropriate commands and arguments inserted for you. A command or macro is identified by a forward slash, and its arguments are contained by curly braces; sometimes additional parameters are contained in square braces before the main argument.
+
+If you don't find this document long-winded enough, I highly recommend the LaTeX Wikibook (http://en.wikibooks.org/wiki/LaTeX).
+
+\subsection{Tools You Will Need}
+To create documents with LaTeX, you need two things:
+\begin{itemize}
+\item{a LaTeX distribution}
+\item{an editor}
+\end{itemize}
+If you are using a Mac, you should already have the MacTeX distribution and TeXshop editor installed by default. On Windows, I like using the TeXnicCenter editor with the MikTeX distribution. Both of these editors use ``source" style editing, where you see what you type. You can also use any traditional text editor like emacs or vim for source editing, but TeX specific editors do offer perks like highlighting your markup, offering shortcuts or autocompleting the arguments for commands, and additional tools like spellcheck. Additionally, many people like LyX, which is a ``what-you-see-is-what-you-mean" (WYSIWYM) style editor. The set-up you choose will be based on your particular preferences and architecture. Regardless of the editor and distribution you use, one of the nice things about LaTeX is that your tex file is basically a text file - small, portable, commentable, and easily version controlled.
+
+\subsection{Building a Document}
+The file that you edit will have a .tex suffix. To build the document on a Mac or Linux computer, simply go to the directory where your .tex file is located and use the command
+
+\begin{verbatim}
+% latex <filename>
+\end{verbatim}
+This will give you a .dvi file which you can then convert/print to the format of your choosing. Notice that you do not include the .tex suffix when specifying the filename - LaTeX figures it out automatically. If you are only using certain figure formats (i.e. not .eps) or do not have figures, you can use PDF LaTeX to print directly to a PDF file using the command 
+
+\begin{verbatim}
+% pdflatex <filename>
+\end{verbatim}
+Many editors have a button or menu option to create your document, such as ``Build'' in TeXnicCenter or ``Typeset'' in TeXshop, bypassing the command line.
+ 
+\subsection{Packages}
+There is a huge range of things you can do in LaTeX and you won't need to do all of them at the same time, so you can pick and choose what functionality your document has. This is done mainly through packages, which define macros (commands/functions) that you use in your document. For example, to display text as if it were on the command line or a line of code above, I used the verbatim package. To use a package, you load it at the beginning of your file, before you begin your document (you will where in the file structure in the next section) using the command
+
+\begin{verbatim}
+\usepackage{<packagename>}
+\end{verbatim}
+You can use multiple packages in a document, but the key is that these packages must be included in your distribution of LaTeX. Many distributions will automatically search for and download a package if you ask to use it but do not already have it. When you first download a distribution, it will have a large number of packages standard.
+
+\section{Document Structure and Styling}
+Documents can get very complicated, but the simplest document in LaTeX must have three things: 
+\begin{itemize}
+\item{A document class}
+\item{A beginning}
+\item{An end}
+\end{itemize}
+The document class specifies the format of the document (i.e. margins, line spacing, font, etc). You can use a built-in class, like \textit{article} (used here), or \textit{book}, or you can use one that has been defined by a separate file such as one provided by a journal which follows their formatting requirements. A document class file has a .cls suffix and must be located in the directory that you are building your document in. To specify your document class, the command 
+\begin{verbatim}
+\documentclass[<param1>,<param2>]{<class>}
+\end{verbatim}.
+Parameters specify things like font size, paper size, whether the document is double sided, etc. The document class command is located at the beginning of your file, and in the simplest cases completely makes up your \textit{preamble}. If you want to use packages as discussed above, you list them in the preamble as well.
+
+After your preamble, which has defined your formatting and other document-wide properties, you must begin your document. After you have inserted the content of your document, you end your document:
+\begin{verbatim}
+\begin{document}
+\end{verbatim}
+$\vdots$
+\begin{verbatim}
+\end{document}
+\end{verbatim}
+Everything that you want to appear in your document must go between the begin statement and the end statement (i.e. in the \textit{body} of the document) - this includes bibliographies, appendices, acknowledgments, and anything else that might come after the end of the main content.
+
+You may want to structure longer documents with elements such as chapters, sections, and subsections. These are simple to include and will automatically format your document appropriately according to your document class (indentation, numbering/lettering of sections, etc.). The syntax is 
+\begin{verbatim}
+\<structural element>{<Title>}
+\end{verbatim}
+For example, the following markup gives:
+\begin{verbatim}
+	\section{This is a Section}
+		\subsection{And this is a subsection}
+		\subsection{Here's another subsection just for fun}
+			\subsubsection{you can even make a SUB-subsection}
+\end{verbatim}
+\setcounter{section}{0}
+\begin{framed}
+	\section{This is a Section}
+		\subsection{And this is a subsection}
+		\subsection{Here's another subsection just for fun}
+			\subsubsection{you can even make a SUB-subsection}
+\end{framed}
+
+Within the text, you may want to \textit{emphasize} something, or make it \textbf{boldface}, or make note of something \footnote{like in a footnote}, or highlight something {\color{red}in a different color}. In these cases, you generally enclose the text that you want to change in curly brackets as the argument of the command(\verb|\textit|, \verb|\textbf|, \verb|\footnote|, and \verb|\color|, respectively). Other things are automatically built in: you may want to list page numbers using using an En dash (pages 67--70), which is inserted using two dashes, or use an Em dash to ask ``yes---or no?" in which case you use three dashes. An inter-word dash or hyphen uses one dash. 	
+
+The general syntax to create a list is
+
+\begin{verbatim}
+\begin{<list type>}
+      \item{<item1>}
+      \item{<item2>}
+      \item{<time3>}
+\end{<list type>}
+\end{verbatim}
+List types include bulleted (\texttt{itemize}), numbered (\texttt{enumerate}), or a glossary-type list (\texttt{description}). The description format is a little different:
+\begin{verbatim}
+\begin{description}
+      \item[Radome] The dome used to cover the antenna of a radar to protect it 
+       from the effects of weather. 
+      \item[Rainband] The complete cloud and precipitation structure associated 
+       with an area of rainfall sufficiently elongated that an orientation can be assigned 
+      \item[Rainbow] Any one of a family of large, colored, circular or nearly 
+      circular arcs formed by light falling on a population of water drops such 
+      as provided by rain, cloud, fog, or spray.
+\end{description}
+\end{verbatim}
+
+\begin{framed}
+\begin{description}
+      \item[Radome] The dome used to cover the antenna of a radar to protect it from the effects of weather. 
+      \item[Rainband] The complete cloud and precipitation structure associated with an area of rainfall sufficiently elongated that an orientation can be assigned 
+      \item[Rainbow] Any one of a family of large, colored, circular or nearly circular arcs formed by light falling on a population of water drops such as provided by rain, cloud, fog, or spray.
+\end{description}
+\end{framed}
+Later, I will describe how to cite the American Meteorological Society's Glossary of Meteorology for the above definitions, both in-text: \citet{AMS}, or in parenthesis: \citep{AMS}.
+
+\setcounter{section}{2}
+\section{Figures and Tables}
+
+\section{Mathematical Formulas}
+
+\section{Bibliographies and Other References}
+
+
+\end{document}
