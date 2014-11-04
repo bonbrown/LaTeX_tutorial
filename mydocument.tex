@@ -6,6 +6,8 @@
 \usepackage{color}
 \usepackage{psfrag}
 \usepackage{framed}
+\usepackage{float}
+\usepackage{amsmath}
 
 \title{A Not-So-Short LaTeX Tutorial}
 \author{Bonnie Brown}
@@ -122,12 +124,101 @@ List types include bulleted (\texttt{itemize}), numbered (\texttt{enumerate}), o
       \item[Rainbow] Any one of a family of large, colored, circular or nearly circular arcs formed by light falling on a population of water drops such as provided by rain, cloud, fog, or spray.
 \end{description}
 \end{framed}
-Later, I will describe how to cite the American Meteorological Society's Glossary of Meteorology for the above definitions, both in-text: \citet{AMS}, or in parenthesis: \citep{AMS}.
+Later, I will describe how to cite the American Meteorological Society's Glossary of Meteorology for the above definitions, both in-text:% \citet{AMS}, or in parenthesis: \citep{AMS}.
 
 \setcounter{section}{2}
 \section{Figures and Tables}
 
+Figures and tables are ``floats'', that is, they float outside of your text and can't be broken up over different pages (I've used the float package here, but that's not necessary to create a float, it just adds more functionality). Thus, they must be created in a float environment. For figures, one just begins a \texttt{figure} - LaTeX knows that it's a float. For tables, you start with a \texttt{tabular} environment and put a table within it - \texttt{table} by itself is not a float environment. Besides the content, other important elements of tables and figures are their caption and label (labels will be used for cross-referencing). Here's an example of the markup for a figure:
+\begin{verbatim}
+\begin{figure}[H]
+	\epsfig{file=examplefig1.eps,scale=.550,clip=}
+   	\caption[here is where the short caption for a list of figures would go]{A 
+	simple figure, using an .eps file. This is where your full caption goes.}
+	\label{fig:fig1}
+\end{figure}
+\end{verbatim}
+And here is the result:
+
+\begin{framed}
+\begin{figure}[H]
+	\epsfig{file=examplefig1.eps,scale=.550,clip=}
+   	\caption[here is where the short caption for a list of figures would go]{A simple figure, using an .eps file. This is where your full caption goes.}
+	\label{fig:fig1}
+\end{figure}
+\end{framed}
+I have used the \texttt{epsfig} package here - when compiling with latex (as opposed to pdflatex) only eps formatted images are acceptable, but \texttt{epsfig} is a little outdated. The other popular graphics package is \texttt{graphicx/graphics} which works with other image formats. 
+
+Does the above figure look right to you? The font doesn't match the rest of the document - the image was made in MATLAB and saved directly to an eps. If you are a MATLAB user there is a tool that makes MATLAB's notoriously hideous figures look better when inserted into your document. It consists of a MATLAB file matlabfrag.m (available from the file exchange) and a LaTeX package PSfrag (\texttt{psfrag}). When matlabfrag is run on a .fig file in MATLAB, it saves two files - an eps file which contains all of the image, but with numerical tags where any text is located (i.e. axis labels, title) and then a .tex file which contains the key to the numerical tags. When both are inserted into your document, the tags are replaced with the proper text, but the text is now in the font and size of your document and is vectorized for sharp figures. Besides having the right package (in addition to \texttt{psfrag}, you should also use the \texttt{color} package) this requires an extra line to specify where the additional tex tile is (notice that the suffix is not included):
+
+\begin{verbatim}
+\begin{figure}[H]
+	\input{examplefig2}
+	\epsfig{file=examplefig2.eps,scale=.550,clip=}
+	\caption{This figure was made using the exact same .fig file as above}
+\end{figure}
+\end{verbatim}
+
+\begin{framed}
+\begin{figure}[H]
+	\input{examplefig2}
+	\epsfig{file=examplefig2.eps,scale=.550,clip=}
+	\caption{This figure was made using the exact same .fig file as above}
+\end{figure}
+\end{framed}
+Now the text in the axis ticks and labels is the correct font and size, and the lines are sharper as well. There are a few things to note when using PSfrag: Most journals won't accept additional tex files and their online LaTeX builds don't use PSfrag, so you can only submit an eps file for a figure. Also, PSfrag does not work with pdflatex, so you generally have to build from the command line. 
+
+The other common float is a table. Here is the markup for a simple table:
+
+\begin{verbatim}
+\begin{table}[H]
+\caption{The caption for a table generally goes at the top, but you should check 
+	the author guidelines of whatever journal that you are submitting to to be 
+	sure. Here's a truncated table of some dual-polarization guidance for 
+	meteorological targets}
+\begin{tabular}{c | c c c c}
+\hline
+Parameter				&Cloud		&Drizzle		&Rain		&Snow 	\\
+\hline
+Reflectivity (dBZ)		&-30 - 20   	& 10 - 20  	 	& 20 - 55   	& 10 - 40  \\[0.5ex]
+Differential Ref (dB)		&0			&0			& 0.5 - 4		& 0 - 3	\\[0.5ex]
+Correlation Coefficient	&$>$0.995		&$>$0.995		&$>$0.95		& 0.8 - $>$0.95 \\[0.5ex]
+\hline
+\end{tabular}
+\end{table}
+\end{verbatim}
+\begin{framed}
+\begin{table}[H]
+\caption{The caption for a table generally goes at the top, but you should check the author guidelines of whatever journal that you are submitting to to be sure. Here's a truncated table of some dual-polarization guidance for meteorological targets}
+\begin{tabular}{c | c c c c}
+\hline
+Parameter				&Cloud		&Drizzle		&Rain		&Snow 	\\
+\hline
+Reflectivity (dBZ)		&-30 - 20   	& 10 - 20  	 	& 20 - 55   	& 10 - 40  \\[0.5ex]
+Differential Ref (dB)		&0			&0			& 0.5 - 4		& 0 - 3	\\[0.5ex]
+Correlation Coefficient	&$>$0.995		&$>$0.995		&$>$0.95		& 0.8 - $>$0.95 \\[0.5ex]
+\hline
+\end{tabular}
+\end{table}
+\end{framed}
+The parameters after \texttt{tabular} specify how many columns and how they will be justified (right, left or center) and specify vertical lines. Within the table, an ampersand denotes a new column and a double backslash indicates the end of a row. After the end of row, the vertical spacing to the next row is indicated.
+
 \section{Mathematical Formulas}
+
+Inserting mathematical formulas in LaTeX is easy, and does not involve endless drop-down or pop-up menus. First, you will want to use the \texttt{amsmath} package (that's American Mathematical Society, not American Meteorological Society!) which improves the typesetting of mathematical formulas. Then you create a math environment using \texttt{equation}. Using the \texttt{equation} environment will number the equation and allow you to label it for further reference. You can create basically any equation you can dream up, so I'm not going to show you every possibility here; for all the gory details of the equation environment, consult the AMSmath User's Guide (PDF file: ftp://ftp.ams.org/pub/tex/doc/amsmath/amsldoc.pdf). Just like in the rest TeX, symbols are denoted with a forward slash in equations. Important functions that do not use forward slashes are subscripting (\_) and superscripting(\^ ) - as before, anything you want contained within is enclosed with curly brackets. For example, here is Euler's Formula:
+\begin{verbatim}
+\begin{equation}
+e^{ix} = \cos x + i\sin x
+\end{equation}
+\end{verbatim}
+
+\begin{framed}
+\begin{equation}
+e^{ix} = \cos x + i\sin x
+\end{equation}
+\end{framed}
+
+Though it may seem like you could just type ``cos'' instead of \verb1\cos1, you should use the macro because the math environment has a default italicized font which the macro overrides. You don't always want to put an equation on a separate line, or even have a whole equation. Maybe you'd like to do an inline insertion of a Greek letter or a short mathematical equation. In that case, you can use dollar signs to start and end your math environment. For example, it's horribly unprofessional to list the units of wind speed as m/s - doesn't m s$^{-1}$ look much better? You get that by typing \verb2m s$^{-1}$2 - note that only the superscript is in the math environment so that the s is not in math font. Here's another example: $\pi = 3.14$ is simply \verb2$\pi = 3.14$2. If you want to use Greek letters in the text without going into math mode, you have to use a special package called \texttt{textgreek}. 
 
 \section{Bibliographies and Other References}
 
