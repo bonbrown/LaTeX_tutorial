@@ -1,6 +1,18 @@
+% Everything before \begin{document} is called the preamble
+% The preamble contains document-wide properties, the document class 
+% and any packages to use.
 \documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{natbib}
 
+\title{A Tiny LaTeX Document}
+\date{November 2014}
+
+% The rest of the document is the body and contains the actual content
 \begin{document}
+
+\maketitle
+
 \section{Why Use LaTeX?}
 \begin{itemize}
     \item{It makes documents super pretty and impressive}
@@ -9,5 +21,10 @@
     \item{Numerous packages make it flexible; you can just as easily write a novel, a math textbook, or make slides for a presentation}
     \item{It's free}
 \end{itemize}
+
+Here's an example of a citation: \citep{Kopka2004}.
+
+\bibliographystyle{plain}
+\bibliography{example_ref}
 
 \end{document}
