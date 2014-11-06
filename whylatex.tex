@@ -3,17 +3,26 @@
 % and any packages to use.
 \documentclass[12pt]{article}
 \usepackage{amsmath}
-\usepackage{natbib}
+\usepackage[round]{natbib}
+\usepackage{graphicx}
+\usepackage{float}
+
+% This the Amer. Meteor. Soc. bibliography style, you must have ametsoc2014.bst in your working directory 
+\bibliographystyle{ametsoc2014}
 
 \title{A Tiny LaTeX Document}
 \date{November 2014}
+\author{Bonnie Brown}
 
 % The rest of the document is the body and contains the actual content
 \begin{document}
 
+% make title takes document-wide properties defined in the preamble to build a title - the document class determines whether the title is its own page or not
 \maketitle
 
+% sections, subsections, etc are automatically numbered. To reset numbering use setcounter macro
 \section{Why Use LaTeX?}
+\label{sec:sec1}
 \begin{itemize}
     \item{It makes documents super pretty and impressive}
     \item{It makes it easy to follow strict formatting guidelines}
@@ -22,9 +31,20 @@
     \item{It's free}
 \end{itemize}
 
-Here's an example of a citation: \citep{Kopka2004}.
+Here's an example of a citation: \citet{Kopka2004}. Below is an example of a figure using a JPEG file:
 
-\bibliographystyle{plain}
+% the figure environment is a float - separate from text and cannot be broken across pages
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.2]{hurricane_bonnie.jpg}
+\caption{Hurricane Bonnie (1998)}
+\label{fig:fig1}
+\end{figure}
+
+% The ~ creates a space that cannot be broken by line or page, useful for references
+Later in your document, you can reference your figure: Figure~\ref{fig:fig1}, see above. You can also reference your sections, if you have labeled them - as I did in Section~\ref{sec:sec1}. Tip: you generally have to build your document twice in a row to get your cross-references to work right. 
+
+% this builds the bibliography from an external file, example_ref.bib which must be in your working directory (or give it the full path). 
 \bibliography{example_ref}
 
 \end{document}
