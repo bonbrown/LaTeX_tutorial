@@ -1,24 +1,27 @@
 \documentclass[12pt]{article}
+\usepackage{psfrag}
 \usepackage{verbatim}
 \usepackage{graphicx}
 \usepackage{epsfig}
 \usepackage{caption}
 \usepackage{color}
-\usepackage{psfrag}
 \usepackage{framed}
 \usepackage{float}
 \usepackage{amsmath}
+\usepackage{natbib}
 
 \title{A Not-So-Short LaTeX Tutorial}
 \author{Bonnie Brown}
 \date{November 2014}
+
+\bibliographystyle{ametsoc2014}
 
 \begin{document}
 
 \maketitle
 
 \section{Introduction}
-LaTeX (``lay-teck") is a type-setting system. It is a powerful and flexible way to create beautiful documents from simple letters or notes, to entire books or dissertations with multiple parts, figures and tables, and bibliographies. LaTeX allows you to focus on what you're writing, not how you write it (like you would in a traditional word processor). You specify the formatting through commands which are passed arguments rather than formatting the text itself. This is very useful for a peer-review manuscript or a thesis which have very strict formatting requirements made by the journal or university, respectively. In fact, journals often provide a LaTeX template that already has the appropriate commands and arguments inserted for you. A command or macro is identified by a forward slash, and its arguments are contained by curly braces; sometimes additional parameters are contained in square braces before the main argument.
+LaTeX (``lay-teck") is a type-setting system. It is a powerful and flexible way to create beautiful documents from simple letters or notes, to entire books or dissertations with multiple parts, figures and tables, and bibliographies. LaTeX allows you to focus on what you're writing, not how you write it (like you would in a traditional word processor). You specify the formatting through commands which are passed arguments rather than formatting the text itself. This is very useful for a peer-review manuscript or a thesis which have very strict formatting requirements made by the journal or university, respectively. In fact, journals often provide a LaTeX template that already has the appropriate commands and arguments inserted for you. A command or macro is identified by a forward slash, and its arguments are contained by curly braces; sometimes optional arguments are contained in square braces before the main argument.
 
 If you don't find this document long-winded enough, I highly recommend the LaTeX Wikibook (http://en.wikibooks.org/wiki/LaTeX).
 
@@ -28,7 +31,7 @@ To create documents with LaTeX, you need two things:
 \item{a LaTeX distribution}
 \item{an editor}
 \end{itemize}
-If you are using a Mac, you should already have the MacTeX distribution and TeXshop editor installed by default. On Windows, I like using the TeXnicCenter editor with the MikTeX distribution. Both of these editors use ``source" style editing, where you see what you type. You can also use any traditional text editor like emacs or vim for source editing, but TeX specific editors do offer perks like highlighting your markup, offering shortcuts or autocompleting the arguments for commands, and additional tools like spellcheck. Additionally, many people like LyX, which is a ``what-you-see-is-what-you-mean" (WYSIWYM) style editor. The set-up you choose will be based on your particular preferences and architecture. Regardless of the editor and distribution you use, one of the nice things about LaTeX is that your tex file is basically a text file - small, portable, commentable, and easily version controlled.
+If you are using a Mac, the standard is the MacTeX distribution and TeXshop editor, though they are no longer installed by default. Warning: MacTeX is a very large download. On Windows, I like using the TeXnicCenter editor with the MikTeX distribution. Both of these editors use ``source" style editing, where you see what you type. You can also use any traditional text editor like emacs or vim for source editing, but TeX specific editors do offer perks like highlighting your markup, offering shortcuts or autocompleting the arguments for commands, and additional tools like spellcheck. Additionally, many people like LyX, which is a ``what-you-see-is-what-you-mean" (WYSIWYM) style editor. The set-up you choose will be based on your particular preferences and architecture. Regardless of the editor and distribution you use, one of the nice things about LaTeX is that your tex file is basically a text file - small, portable, commentable, and easily version controlled.
 
 \subsection{Building a Document}
 The file that you edit will have a .tex suffix. To build the document on a Mac or Linux computer, simply go to the directory where your .tex file is located and use the command
@@ -124,46 +127,48 @@ List types include bulleted (\texttt{itemize}), numbered (\texttt{enumerate}), o
       \item[Rainbow] Any one of a family of large, colored, circular or nearly circular arcs formed by light falling on a population of water drops such as provided by rain, cloud, fog, or spray.
 \end{description}
 \end{framed}
-Later, I will describe how to cite the American Meteorological Society's Glossary of Meteorology for the above definitions, both in-text:% \citet{AMS}, or in parenthesis: \citep{AMS}.
+Later, I will describe how to cite the American Meteorological Society's Glossary of Meteorology for the above definitions, both in-text: \citet{Glickman2000}, or in parenthesis: \citep{Glickman2000}.
 
 \setcounter{section}{2}
 \section{Figures and Tables}
 
-Figures and tables are ``floats'', that is, they float outside of your text and can't be broken up over different pages (I've used the float package here, but that's not necessary to create a float, it just adds more functionality). Thus, they must be created in a float environment. For figures, one just begins a \texttt{figure} - LaTeX knows that it's a float. For tables, you start with a \texttt{tabular} environment and put a table within it - \texttt{table} by itself is not a float environment. Besides the content, other important elements of tables and figures are their caption and label (labels will be used for cross-referencing). Here's an example of the markup for a figure:
+Figures and tables are ``floats'', that is, they float outside of your text and can't be broken up over different pages (I've used the float package here, but that's not necessary to create a float, it just adds more functionality). Thus, they must be created in a float environment. For figures, one just begins a \texttt{figure} - LaTeX knows that it's a float. For tables, you start with a \texttt{table} environment and put a tabular object within it - \texttt{tabular} by itself is not a float environment. Besides the content, other important elements of tables and figures are their caption and label (labels will be used for cross-referencing). Here's an example of the markup for a figure:
 \begin{verbatim}
 \begin{figure}[H]
-	\epsfig{file=examplefig1.eps,scale=.550,clip=}
+	\epsfig{file=examplefig1.eps,scale=.470,clip=}
    	\caption[here is where the short caption for a list of figures would go]{A 
 	simple figure, using an .eps file. This is where your full caption goes.}
-	\label{fig:fig1}
+	\label{fig:eps}
 \end{figure}
 \end{verbatim}
-And here is the result:
+And here is the result\footnote{I put frames to indicate the output of markup - sorry it turned out ugly in this case. It is not part of the float}:
 
 \begin{framed}
 \begin{figure}[H]
-	\epsfig{file=examplefig1.eps,scale=.550,clip=}
+	\epsfig{file=examplefig1.eps,scale=.470,clip=}
    	\caption[here is where the short caption for a list of figures would go]{A simple figure, using an .eps file. This is where your full caption goes.}
-	\label{fig:fig1}
+	\label{fig:eps}
 \end{figure}
 \end{framed}
-I have used the \texttt{epsfig} package here - when compiling with latex (as opposed to pdflatex) only eps formatted images are acceptable, but \texttt{epsfig} is a little outdated. The other popular graphics package is \texttt{graphicx/graphics} which works with other image formats. 
+I have used the \texttt{epsfig} package here - when compiling with latex (as opposed to pdflatex) only eps formatted images are acceptable, but \texttt{epsfig} is a little outdated. The other popular graphics package is \texttt{graphicx/graphics} which works with other image formats. The main elements of the figure are the \texttt{figure} environment that establishes a float with optional placement arguments, the image itself, with optional arguments depending on the package (sizing is one you'll be very interested in - you can scale an image, specify it's length and width, or just specify one dimension and let the other scale), the caption, and a label. 
 
 Does the above figure look right to you? The font doesn't match the rest of the document - the image was made in MATLAB and saved directly to an eps. If you are a MATLAB user there is a tool that makes MATLAB's notoriously hideous figures look better when inserted into your document. It consists of a MATLAB file matlabfrag.m (available from the file exchange) and a LaTeX package PSfrag (\texttt{psfrag}). When matlabfrag is run on a .fig file in MATLAB, it saves two files - an eps file which contains all of the image, but with numerical tags where any text is located (i.e. axis labels, title) and then a .tex file which contains the key to the numerical tags. When both are inserted into your document, the tags are replaced with the proper text, but the text is now in the font and size of your document and is vectorized for sharp figures. Besides having the right package (in addition to \texttt{psfrag}, you should also use the \texttt{color} package) this requires an extra line to specify where the additional tex tile is (notice that the suffix is not included):
 
 \begin{verbatim}
 \begin{figure}[H]
 	\input{examplefig2}
-	\epsfig{file=examplefig2.eps,scale=.550,clip=}
+	\epsfig{file=examplefig2.eps,scale=.470,clip=}
 	\caption{This figure was made using the exact same .fig file as above}
+	\label{fig:frag}
 \end{figure}
 \end{verbatim}
 
 \begin{framed}
 \begin{figure}[H]
 	\input{examplefig2}
-	\epsfig{file=examplefig2.eps,scale=.550,clip=}
+	\epsfig{file=examplefig2.eps,scale=.470,clip=}
 	\caption{This figure was made using the exact same .fig file as above}
+	\label{frag}
 \end{figure}
 \end{framed}
 Now the text in the axis ticks and labels is the correct font and size, and the lines are sharper as well. There are a few things to note when using PSfrag: Most journals won't accept additional tex files and their online LaTeX builds don't use PSfrag, so you can only submit an eps file for a figure. Also, PSfrag does not work with pdflatex, so you generally have to build from the command line. 
@@ -185,6 +190,7 @@ Differential Ref (dB)		&0			&0			& 0.5 - 4		& 0 - 3	\\[0.5ex]
 Correlation Coefficient	&$>$0.995		&$>$0.995		&$>$0.95		& 0.8 - $>$0.95 \\[0.5ex]
 \hline
 \end{tabular}
+\label{tab:pol}
 \end{table}
 \end{verbatim}
 \begin{framed}
@@ -199,6 +205,7 @@ Differential Ref (dB)		&0			&0			& 0.5 - 4		& 0 - 3	\\[0.5ex]
 Correlation Coefficient	&$>$0.995		&$>$0.995		&$>$0.95		& 0.8 - $>$0.95 \\[0.5ex]
 \hline
 \end{tabular}
+\label{tab:pol}
 \end{table}
 \end{framed}
 The parameters after \texttt{tabular} specify how many columns and how they will be justified (right, left or center) and specify vertical lines. Within the table, an ampersand denotes a new column and a double backslash indicates the end of a row. After the end of row, the vertical spacing to the next row is indicated.
@@ -207,20 +214,56 @@ The parameters after \texttt{tabular} specify how many columns and how they will
 
 Inserting mathematical formulas in LaTeX is easy, and does not involve endless drop-down or pop-up menus. First, you will want to use the \texttt{amsmath} package (that's American Mathematical Society, not American Meteorological Society!) which improves the typesetting of mathematical formulas. Then you create a math environment using \texttt{equation}. Using the \texttt{equation} environment will number the equation and allow you to label it for further reference. You can create basically any equation you can dream up, so I'm not going to show you every possibility here; for all the gory details of the equation environment, consult the AMSmath User's Guide (PDF file: ftp://ftp.ams.org/pub/tex/doc/amsmath/amsldoc.pdf). Just like in the rest TeX, symbols are denoted with a forward slash in equations. Important functions that do not use forward slashes are subscripting (\_) and superscripting(\^ ) - as before, anything you want contained within is enclosed with curly brackets. For example, here is Euler's Formula:
 \begin{verbatim}
-\begin{equation}
+\begin{equation}\label{eqn:euler}
 e^{ix} = \cos x + i\sin x
 \end{equation}
 \end{verbatim}
 
 \begin{framed}
-\begin{equation}
+\begin{equation}\label{eqn:euler}
 e^{ix} = \cos x + i\sin x
+\end{equation}
+\end{framed}
+Or how about some thing a little more complicated, like a Taylor series...
+\begin{verbatim}
+\begin{equation}\label{eqn:taylor}
+f(x) = f(a) + \frac{f'(a)}{1!}(x-a) + \frac{f''(a)}{2!}(x-a)^2+...
+\end{equation}
+\end{verbatim}
+
+\begin{framed}
+\begin{equation}\label{eqn:taylor}
+f(x) = f(a) + \frac{f'(a)}{1!}(x-a) + \frac{f''(a)}{2!}(x-a)^2+...
 \end{equation}
 \end{framed}
 
 Though it may seem like you could just type ``cos'' instead of \verb1\cos1, you should use the macro because the math environment has a default italicized font which the macro overrides. You don't always want to put an equation on a separate line, or even have a whole equation. Maybe you'd like to do an inline insertion of a Greek letter or a short mathematical equation. In that case, you can use dollar signs to start and end your math environment. For example, it's horribly unprofessional to list the units of wind speed as m/s - doesn't m s$^{-1}$ look much better? You get that by typing \verb2m s$^{-1}$2 - note that only the superscript is in the math environment so that the s is not in math font. Here's another example: $\pi = 3.14$ is simply \verb2$\pi = 3.14$2. If you want to use Greek letters in the text without going into math mode, you have to use a special package called \texttt{textgreek}. 
 
 \section{Bibliographies and Other References}
+I've been attaching labels to many elements of this document using \verb2\label2 - you usually want to include a label with a figure, table, equation, and even sections or subsections for cross-reference later. You simple define a label within or immediately following the element that you want to attach it to - in floats, the label can never precede the caption. Once you've defined a label, you can reference it anywhere in your document by using \verb2\ref2. For example, if I want to reference the table two section ago, I would insert \verb2\ref{tab:pol}2 and it would appear thus: \ref{tab:pol}. Notice you only get the table number - if I decide to also reference Euler's Formula from earlier I will get: \ref{eqn:euler}. So which is the table and which is the equation? You just have to explicitly say in your text: \verb3Equation~\ref{eqn:euler}3: Equation~\ref{eqn:euler}. Much better. The tilde ensures that it doesn't get separated by a line break. You can move your figure or table around and as long as the label is the same, the reference will stay linked. For this reason, it's good to be descriptive with your labels rather than defining them numerically - what if you want to insert a new figure at the beginning of your document - suddenly a label that says ``fig:fig1" might actually be referring to Figure 2. But don't worry - even if you did call your label ``fig:fig1" internally, LaTeX would know that the figure moved and your reference would show that it was the second figure - you just don't want to confuse yourself while writing. 
 
+The other major type of reference you'll make is citations of literature. LaTeX makes great bibliographies using a companion program called BibTeX and it's easy to cite literature from them but you'll need a few things:
+\begin{itemize}
+	\item{a formatted bibliography file (.bib)}
+	\item{a bibliography style file (.bst)}
+	\item{(optional, but recommended) a citation manager that exports .bib files}
+	\item{(optional, but recommended) the natbib package}
+\end{itemize}
+
+A bibliography file (.bib) is composed of formatted entries that are categorized by the type of citation - book, article, dissertation, etc. Each entry contains a BibTeX key which is the label you use to reference the entry in your document, required fields to build each entry, and optional metadata. The key should, like labels, be descriptive so that you can recall easily what it is when referencing - AuthorYYYY (YYYY being the year) is useful. The format looks like this:
+\begin{verbatim}
+@<category>{<key>
+	Author = {<author},
+	Title = {<title>},
+	Year = {<year>},
+}
+\end{verbatim}
+It is generally easiest to use a citation manager (I use JabRef) to build your .bib file rather than typing it out directly (though you can use any simple text editor to do so). A citation manager made to export to BibTex will provide a form for each category that you can fill in to populate all of the required fields in the right format. Depending on the bibliography style that you use, BibTeX can be a bit tricky with getting entries to look exactly the way you want them to look, especially when it comes to capitalizing words. If you have a proper noun in your title that must remain capitalized, put the whole word or just the first letter in curly brackets to force the capital letter to be printed literally. There are also ways to define abbreviations that will apply to your whole bibliography in your .bib file - like having it print \textit{J. Atmos. Sci.} for the Journal of the Atmospheric Sciences. 
+
+To insert your bibliography into your document, first you tell LaTeX what style you want - journals will include a bibliography style (.bst file) with their template (I am using the American Meteorological Society's here). You can do this right before the bibliography itself or in the preamble using \verb2\bibliographystyle{<style>}2. Note that you do not include the .bst suffix. Next, you build the bibliography itself, by using \verb2\bibliography{<references>}2. Again, the filename does not have a suffix and this command goes at the location that you want your bibliography to appear (generally the last thing in your document). I recommend using the natbib package - science journal bibliography styles will generally require it. It allows you to cite literature inline in your text in two ways - textually, i.e. \verb2\citet{<bibkey>}2: \citet{Kopka2004}, or parenthetically, i.e. \verb2\citep{<bibkey>}2:\citep{Kopka2004}. How your citations actually look will depend on your bibliography style and the options you select with natbib. \texttt{citet} and \texttt{citep} both have options for including other text both before and after the citation like ``Equation 2.6" or ``e.g.," which look like: \verb3\citep[e.g.,][Equation 2.6]{<bibkey>}3 and appear like: \citep[e.g.,][Equation 2.6]{Kopka2004}. 
+
+Now you have all of your content for your document: Text, figures, tables, bibliography. To build the final project such that all of your citations and cross-references are defined, follow this order: LaTeX, BibTeX, LaTeX, LaTeX. Yes, build it twice in a row. Whether running in a command line or an editor, you will usually get a dialog that will tell you where any warnings or errors are, and how big the final product is. I can't possibly cover everything about LaTeX here, but there are a ton of great references for LaTeX itself, BibTex, and all the numerous packages if you just Google them, and you'll probably be able to find the solution to your errors the same way.
+
+\bibliography{example_ref}
 
 \end{document}
